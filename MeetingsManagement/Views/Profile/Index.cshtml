@@ -1,0 +1,68 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ContentTitle"] = $"Hello, {Model}";
+}
+
+<div class="holder">
+    <h3>Settings</h3>
+    <div class="settings">
+        <div class="sidebar">
+            <ul>
+                <li class="selected">Password</li>
+                <li>Phone Number</li>
+            </ul>
+        </div>
+        <div class="setting">
+            <form>
+                <div class="form-control">
+                    <label>
+                        <div>Current Password</div>
+                        <input type="password" name="CurrentPassword" id="CurrentPassword" />
+                        <span class="form-input-validation"></span>
+                    </label>
+                </div>
+                <div class="form-control">
+                    <label>
+                        <div>New Password</div>
+                        <input type="password" name="NewPassword" id="NewPassword" />
+                        <span class="form-input-validation"></span>
+                    </label>
+                </div>
+                <div class="form-control">
+                    <label>
+                        <div>Confirm New Password</div>
+                        <input type="password" name="NewPasswordConfirmation" id="NewPasswordConfirmation" />
+                        <span class="form-input-validation"></span>
+                    </label>
+                </div>
+                <input type="submit" value="Update Password" class="form-submit">
+            </form>
+            <form hidden>
+                <div class="form-control">
+                    <label>
+                        <div>Password</div>
+                        <input type="password" name="currentPassword">
+                    </label>
+                </div>
+                <div class="form-control">
+                    <label>
+                        <div>Phone Number</div>
+                        <input type="tel" name="phoneNumber">
+                    </label>
+                </div>
+                <input type="submit" value="Update Phone Number" class="form-submit">
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/form-controls.css" />
+    <link rel="stylesheet" href="~/css/profile.css" />
+}
+
+@section Scripts {
+    <script src="~/js/profile.js?2023-10-30 15:03"></script>
+}

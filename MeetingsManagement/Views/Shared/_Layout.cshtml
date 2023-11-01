@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+@{
+    bool isAnonymous = (User.Identity is null || !User.Identity.IsAuthenticated);
+    bool isHome = "Home".Equals(ViewData["Title"]);
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Meetings Management</title>
+    <link rel="stylesheet" href="~/css/normalize.css" />
+    <link rel="stylesheet" href="~/css/main-style.css?2023-10-29 12:18" />
+    @RenderSection("Styles", false)
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="left">
+                <h1><a asp-controller="Home" asp-action="Index" style="color:inherit">Meeting Management</a></h1>
+                <ul>
+                    @if (!isAnonymous)
+                    {
+                        <li><a asp-controller="Meetings" asp-action="Show">Meetings</a></li>
+                        <li><a asp-controller="Meetings" asp-action="Schedule">Schedule</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="right">
+                <ul>
+                    @if (isAnonymous)
+                    {
+                        <li><a asp-controller="Account" asp-action="SignUp">Sign up</a></li>
+                        <li><a asp-controller="Account" asp-action="LogIn">Log in</a></li>
+                    } else
+                    {
+                        <li><a asp-controller="Profile" asp-action="Index">Profile</a></li>
+                        <li><a asp-controller="Account" asp-action="LogOut">Log out</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        @if (!isAnonymous || !isHome)
+        {
+            <h2>@ViewData["ContentTitle"]</h2>
+        }
+        <div class="container">
+            @RenderBody()
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @if (!isAnonymous)
+    {
+        <script src="~/js/log-out.js"></script>
+    }
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

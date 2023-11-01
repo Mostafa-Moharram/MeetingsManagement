@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Log In";
+    ViewData["ContentTitle"] = "User's Credentials";
+}
+
+@model UserLogInDto
+
+<form asp-controller="Account" asp-action="LogIn" method="post">
+    <div asp-validation-summary="ModelOnly" class="form-validation"></div>
+    <div class="form-control">
+        <label>
+            <div>Email</div>
+            <input asp-for="Email" />
+            <span asp-validation-for="Email" class="form-input-validation"></span>
+        </label>
+    </div>
+    <div class="form-control">
+        <label>
+            <div>Password</div>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password" class="form-input-validation"></span>
+        </label>
+    </div>
+    <input type="submit" value="Log in" class="form-submit">
+</form>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/form-controls.css?2023-10-30 10:22" />
+    <link rel="stylesheet" href="~/css/log-in.css?" />
+}

@@ -1,0 +1,40 @@
+.content .container form {
+    background-color: white;
+    width: fit-content;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+.content .container form .form-holder {
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .content .container form .form-holder {
+        flex-direction: column;
+    }
+}
+
+.content .container form .holder {
+    min-width: 300px;
+}
+
+@media (max-width: 400px) {
+    .content .container form .holder {
+        min-width: 250px;
+    }
+}
+
+.content .container form .form-control {
+    width: 100%;
+}
+
+.content .container form .form-control:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+.content .container form .form-submit {
+    margin: 0 auto;
+}

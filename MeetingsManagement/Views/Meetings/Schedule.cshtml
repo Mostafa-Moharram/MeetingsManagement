@@ -1,0 +1,47 @@
+﻿@model Meeting
+
+@{
+    ViewData["Title"] = "Schedule Meeting";
+    ViewData["ContentTitle"] = "Schedule Meeting";
+}
+
+<form class="schedule-meeting-form" asp-controller="Meetings" asp-action="Schedule" method="post">
+    <div class="form-control">
+        <label>
+            <div>Title</div>
+            <input asp-for="Title" />
+            <span asp-validation-for="Title" class="form-input-validation"></span>
+        </label>
+    </div>
+    <div class="form-control">
+        <label>
+            <div>Description</div>
+            <input asp-for="Description" />
+            <span asp-validation-for="Description" class="form-input-validation"></span>
+        </label>
+    </div>
+    <div class="form-control">
+        <label>
+            <div>Starts at</div>
+            <input asp-for="StartTime" />
+            <span asp-validation-for="StartTime" class="form-input-validation"></span>
+        </label>
+    </div>
+    <div class="form-control">
+        <label>
+            <div>Ends at</div>
+            <input asp-for="EndTime" />
+            <span asp-validation-for="EndTime" class="form-input-validation"></span>
+        </label>
+    </div>
+    <input type="submit" value="Schedule" class="form-submit" />
+</form>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/form-controls.css" />
+    <link rel="stylesheet" href="~/css/schedule.css" />
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

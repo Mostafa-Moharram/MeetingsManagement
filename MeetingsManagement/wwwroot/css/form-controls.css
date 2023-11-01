@@ -1,0 +1,57 @@
+.form-control {
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: var(--box-shadow);
+}
+
+.form-control label > div {
+    color: var(--text-color);
+    font-weight: 600;
+    padding-left: 5px;
+    margin-bottom: 5px;
+}
+
+.form-control label input {
+    border: 1px solid var(--header-color);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-weight: 500;
+    width: 100%;
+    padding: 10px 10px 10px 20px;
+}
+
+.form-control label select {
+    appearance: none;
+    background-color: transparent;
+    border: 1px solid var(--header-color);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-weight: 500;
+    width: 100%;
+    padding: 10px 10px 10px 20px;
+    margin: 0;
+    display: block;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+}
+
+.form-submit {
+    cursor: pointer;
+    border: none;
+    color: white;
+    background-color: var(--strong-color);
+    display: block;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 6px;
+}
+
+.form-input-validation,
+.form-validation {
+    color: #c90000;
+    font-size: 12px;
+    padding-left: 10px;
+    width: 100%;
+}

@@ -1,0 +1,21 @@
+.content .container form {
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    margin: 0 auto;
+    width: 350px;
+}
+
+@media (max-width: 400px) {
+    .content .container form {
+        width: 250px;
+    }
+}
+
+.content .container form .form-control {
+    margin-bottom: 20px;
+}
+
+.content .container form .form-submit {
+    margin: 0 auto;
+}

@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Sign Up";
+    ViewData["ContentTitle"] = "User Sign Up Info";
+}
+@model UserSignUpDto
+
+<form asp-controller="Account" asp-action="SignUp" method="post">
+    <div asp-validation-summary="ModelOnly" class="form-validation"></div>
+    <div class="form-holder">
+        <div class="holder">
+            <div class="form-control">
+                <label>
+                    <div>Nickname</div>
+                    <input type="text" asp-for="Nickname" />
+                    <span asp-validation-for="Nickname" class="form-input-validation"></span>
+                </label>
+            </div>
+            <div class="form-control">
+                <label>
+                    <div>Email</div>
+                    <input type="email" asp-for="Email" />
+                    <span asp-validation-for="Email" class="form-input-validation"></span>
+                </label>
+            </div>
+            <div class="form-control">
+                <label>
+                    <div>Phone Number</div>
+                    <input type="tel" asp-for="PhoneNumber" />
+                    <span asp-validation-for="PhoneNumber" class="form-input-validation"></span>
+                </label>
+            </div>
+        </div>
+        <div class="holder">
+            <div class="form-control">
+                <label>
+                    <div>Password</div>
+                    <input type="password" asp-for="Password" />
+                    <span asp-validation-for="Password" class="form-input-validation"></span>
+                </label>
+            </div>
+            <div class="form-control">
+                <label>
+                    <div>Confirm Password</div>
+                    <input type="password" asp-for="PasswordConfirmation" />
+                    <span asp-validation-for="PasswordConfirmation" class="form-input-validation"></span>
+                </label>
+            </div>
+            <input type="submit" value="Register" class="form-submit">
+        </div>
+    </div>
+</form>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/form-controls.css?2023-10-30 08:42" />
+    <link rel="stylesheet" href="~/css/sign-up.css?2023-10-30 09:14" />
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

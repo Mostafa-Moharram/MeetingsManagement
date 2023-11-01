@@ -1,0 +1,15 @@
+.schedule-meeting-form {
+    background-color: white;
+    width: fit-content;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+.schedule-meeting-form .form-control {
+    margin: 0 0 20px;
+}
+
+.schedule-meeting-form .form-submit {
+    margin: 0 auto;
+}

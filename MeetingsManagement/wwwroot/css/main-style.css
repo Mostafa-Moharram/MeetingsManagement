@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*:focus {
+    outline: none;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+:root {
+    --text-color: #141E46;
+    --light-text-color: #919191;
+    --background-color: #FFF5E0;
+    --header-color: #FF6969;
+    --strong-color: #C70039;
+    --header-height: 75px;
+    --box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    --header-minimized: 117px;
+}
+
+header {
+    padding: 20px 0;
+    background-color: var(--header-color);
+}
+
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media (max-width: 992px) {
+    header .container {
+        flex-direction: column;
+    }
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    font-size: 30px;
+}
+@media (max-width: 992px) {
+    header h1 {
+        font-size: 25px;
+    }
+}
+
+header .left {
+    gap: 35px;
+    display: flex;
+    align-items: center;
+}
+@media (max-width: 992px) {
+    header .left {
+        flex-direction: column;
+        gap: 20px;
+    }
+    header .right {
+        margin-top: 10px;
+    }
+}
+
+header ul {
+    display: flex;
+    gap: 20px;
+}
+
+header ul li a {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+@media (max-width: 992px) {
+    header ul li a {
+        font-size: 16px;
+    }
+}
+
+.content {
+    padding: 40px 0;
+    min-height: calc(100vh - var(--header-height));
+    background-color: var(--background-color);
+}
+
+@media (max-width: 992px) {
+    .content {
+        min-height: calc(100vh - var(--header-minimized));
+    }
+}
+
+.content h2 {
+    color: var(--text-color);
+    text-align: center;
+    margin: 0 0 20px;
+}

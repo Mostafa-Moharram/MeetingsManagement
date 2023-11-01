@@ -1,0 +1,58 @@
+.content .container .holder {
+    width: fit-content;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.content .container .holder h3 {
+    padding: 0 0 5px;
+    margin: 0 0 15px;
+    border-bottom: 1px solid var(--text-color);
+}
+
+.content .container .holder .settings {
+    gap: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 630px) {
+    .content .container .holder .settings {
+        flex-direction: column;
+    }
+}
+
+.content .container .holder .settings .sidebar {
+    border-right: 1px solid var(--text-color);
+    min-width: 200px;
+}
+
+@media (max-width: 630px) {
+    .content .container .holder .settings .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--text-color);
+    }
+}
+
+.content .container .holder .settings .sidebar ul li {
+    color: var(--text-color);
+    font-weight: 600;
+    padding: 10px 20px;
+    transition: 0.3s;
+}
+
+.content .container .holder .settings .sidebar ul li.selected {
+    color: white;
+    padding-left: 30px;
+    background-color: var(--strong-color);
+}
+
+.content .container .holder .settings .setting form input[type="submit"] {
+    margin: 20px auto;
+}
+
+.content .container .holder .settings .setting form .form-control {
+    margin-bottom: 20px;
+}

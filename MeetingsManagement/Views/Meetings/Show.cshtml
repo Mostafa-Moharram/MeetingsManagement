@@ -1,0 +1,35 @@
+﻿@model List<Meeting>
+@{
+    ViewData["Title"] = "Meetings";
+    ViewData["ContentTitle"] = "Meetings";
+}
+<div class="meetings">
+    @foreach (var meeting in Model)
+    {
+        <div class="meeting">
+            <div class="delete-button">X</div>
+            <input asp-for="@meeting.Id" hidden />
+            <h4>@meeting.Title</h4>
+            <div class="timestamp">
+                <span>From <span class="from">@meeting.StartTime!.Value.ToString("yyyy-MM-dd hh:mm tt")</span></span>
+                <span>To <span class="to">@meeting.EndTime!.Value.ToString("yyyy-MM-dd hh:mm tt")</span></span>
+            </div>
+            @if (!string.IsNullOrEmpty(meeting.Description))
+            {
+                <p>@meeting.Description</p>
+            }
+            <div class="edit-options">
+                <a href="#">Reminders</a>
+                <a href="#">Edit</a>
+            </div>
+        </div>
+    }
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/meetings-show.css?2023-11-01 14:44" />
+}
+
+@section Scripts {
+    <script src="~/js/meetings-show.js"></script>
+}
