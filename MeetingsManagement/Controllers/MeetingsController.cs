@@ -3,7 +3,6 @@ using MeetingsManagementWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace MeetingsManagementWeb.Controllers
 {
@@ -39,7 +38,7 @@ namespace MeetingsManagementWeb.Controllers
             }
             _dbContext.Add(meeting);
             _dbContext.SaveChanges();
-            return Ok(new { status = "Succeeded" });
+            return RedirectToRoute("MeetingReminders", new { meeting.Id });
         }
         [Authorize]
         public IActionResult Show()

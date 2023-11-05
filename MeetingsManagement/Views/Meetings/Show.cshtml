@@ -19,7 +19,7 @@
                 <p>@meeting.Description</p>
             }
             <div class="edit-options">
-                <a href="#">Reminders</a>
+                <a asp-route="MeetingReminders" asp-route-id="@meeting.Id">Reminders</a>
                 <a href="#">Edit</a>
             </div>
         </div>

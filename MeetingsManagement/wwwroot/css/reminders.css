@@ -1,0 +1,97 @@
+.content .container .holder {
+    background-color: white;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.content .container .holder .meeting .meeting-title {
+    padding: 0;
+    margin: 0 0 5px;
+    font-size: 18px;
+    color: var(--text-color);
+}
+
+.content .container .holder .meeting .datetime {
+    font-weight: bold;
+    color: var(--light-text-color);
+    padding: 0;
+    margin: 0;
+    min-width: 200px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.content .container .holder .meeting .description {
+    margin: 10px 0 0;
+    color: #7d7777;
+}
+
+.content .container .holder h4 {
+    margin-bottom: 20px;
+}
+
+.content .container .holder .reminders {
+    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    /*align-items: center;*/
+}
+
+.content .container .holder .content-heading form,
+.content .container .holder .reminders .reminder {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+}
+
+.content .container .holder .content-heading {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.content .container .holder .content-heading form {
+    width: fit-content;
+}
+
+.content .container .holder .content-heading form .form-control {
+    margin-bottom: 20px;
+}
+
+.content .container .holder .content-heading form .form-submit {
+    margin: 0 auto;
+}
+
+.content .container .holder .reminders .reminder {
+    position: relative;
+    height: fit-content;
+    width: 170px;
+}
+
+.content .container .holder .reminders .reminder .delete-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--strong-color);
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+    user-select: none;
+    color: white;
+    line-height: 1;
+}
+
+.content .container .holder .reminders .reminder .date,
+.content .container .holder .reminders .reminder .time,
+.content .container .holder .reminders .reminder .type {
+    font-weight: bold;
+    color: var(--light-text-color);
+    display: flex;
+    justify-content: space-between;
+}
+
+.content .container .holder .reminders .reminder hr {
+    margin: 5px 7px;
+    color: var(--light-text-color);
+}

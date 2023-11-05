@@ -1,0 +1,54 @@
+﻿@using System.Text.Json;
+@model RemindersVM
+
+@{
+    ViewData["Title"] = "Reminders";
+    ViewData["ContentTitle"] = "Meeting Reminders";
+}
+
+<script>
+    const reminders = @Html.Raw(JsonSerializer.Serialize(Model.Reminders))
+    const reminderTypes = @Html.Raw(JsonSerializer.Serialize(Model.RemindersTypes))
+</script>
+
+<div class="holder">
+    <div class="content-heading">
+        <div class="meeting">
+            <h3 class="meeting-title">@Model.MeetingTitle</h3>
+            <div class="datetime">From <span>@Model.StartTime.Date.ToString("yyyy-MM-dd hh:mm tt")</span></div>
+            <div class="datetime">To <span>@Model.EndTime.Date.ToString("yyyy-MM-dd hh:mm tt")</span></div>
+            <div class="description">@Model.MeetingDescription</div>
+        </div>
+        <form class="new-reminder-form">
+            <input type="hidden" asp-for="MeetingId">
+            <h4>New Reminder</h4>
+            <div class="form-control">
+                <label>
+                    <div>Type</div>
+                    <select name="typeId">
+                        <option value="0">Select Type</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-control">
+                <label>
+                    <div>Reminds at</div>
+                    <input type="datetime-local" name="datetime">
+                </label>
+            </div>
+            <input type="submit" value="Add" class="form-submit">
+        </form>
+    </div>
+    <h4>Reminders</h4>
+    <div class="reminders">
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/form-controls.css" />
+    <link rel="stylesheet" href="~/css/reminders.css" />
+}
+
+@section Scripts {
+    <script src="~/js/reminders.js?2023-11-05 13:58"></script>
+}
