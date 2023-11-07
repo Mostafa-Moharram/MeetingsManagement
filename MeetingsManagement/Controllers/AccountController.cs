@@ -91,8 +91,46 @@ namespace MeetingsManagementWeb.Controllers
         }
 
         #region API CALLS
-        [Authorize, HttpPost]
-        public IActionResult ChangePassword([FromBody] UserPasswordDto userDto)
+        [Authorize, HttpPut, Route("Account/Update/Nickname")]
+        public IActionResult UpdateNickname([FromBody] UserNicknameDto userDto)
+        {
+            if (User.Identity is null || !User.Identity.IsAuthenticated)
+                return BadRequest(new { status = "Failed", message = "The user has to be logged in." });
+            if (userDto is null)
+                return BadRequest(new { status = "Failed", message = "The request can't be empty." });
+            if (string.IsNullOrEmpty(userDto.Nickname))
+                return BadRequest(new { status = "Failed", message = "The nickname field can't be empty." });
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            var status = _userManager.CheckPasswordAsync(user!, userDto.Password!).Result;
+            if (!status)
+                return BadRequest(new { status = "Failed", message = "The password is incorrect." });
+            user!.Nickname = userDto.Nickname;
+            var result = _userManager.UpdateAsync(user).Result;
+            if (result.Succeeded)
+                return Ok(new { userDto.Nickname });
+            return BadRequest(new { status = "Failed", message = string.Join('\n', result.Errors) });
+        }
+        [Authorize, HttpPut, Route("Account/Update/PhoneNumber")]
+        public IActionResult UpdatePhoneNumber([FromBody] UserPhoneNumberDto userDto)
+        {
+            if (User.Identity is null || !User.Identity.IsAuthenticated)
+                return BadRequest(new { status = "Failed", message = "The user has to be logged in." });
+            if (userDto is null)
+                return BadRequest(new { status = "Failed", message = "The request can't be empty." });
+            if (string.IsNullOrEmpty(userDto.PhoneNumber))
+                return BadRequest(new { status = "Failed", message = "The phone number field can't be empty." });
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            var status = _userManager.CheckPasswordAsync(user!, userDto.Password!).Result;
+            if (!status)
+                return BadRequest(new { status = "Failed", message = "The password is incorrect." });
+            var token = _userManager.GenerateChangePhoneNumberTokenAsync(user!, userDto.PhoneNumber).Result;
+            var result = _userManager.ChangePhoneNumberAsync(user!, userDto.PhoneNumber, token).Result;
+            if (result.Succeeded)
+                return Ok();
+            return BadRequest(new { status = "Failed", message = string.Join('\n', result.Errors) });
+        }
+        [Authorize, HttpPut, Route("Account/Update/Password")]
+        public IActionResult UpdatePassword([FromBody] UserPasswordDto userDto)
         {
             if (User.Identity is null || !User.Identity.IsAuthenticated)
                 return BadRequest(new { status = "Failed", message = "The user has to be logged in." });
@@ -102,8 +140,6 @@ namespace MeetingsManagementWeb.Controllers
                 return BadRequest(new { status = "Faild", message = "`Current Password` cannot be empty.", element = "CurrentPassword" });
             if (string.IsNullOrEmpty(userDto.NewPassword))
                 return BadRequest(new { status = "Failed", message = "`New Password` cannot be empty.", element = "NewPassword" });
-            if (IsStrongPassword(userDto.NewPassword))
-                return BadRequest(new { status = "Failed", message = "The password is weak.", element = "NewPassword" });
             if (userDto.NewPassword != userDto.NewPasswordConfirmation)
                 return BadRequest(new { status = "Failed", message = "`Confirm Password doesn't match `New Password`.", element = "NewPasswordConfirmation" });
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
@@ -114,21 +150,5 @@ namespace MeetingsManagementWeb.Controllers
                 message = string.Join('\n', result.Errors.Select(error => error.Description)) });
         }
         #endregion
-
-        private static bool IsStrongPassword(string password)
-        {
-            if (string.IsNullOrEmpty(password))
-                return false;
-            bool hasLowercase = false, hasUppercase = false, hasDigit = false, hasSymbol = false;
-            foreach (char c in password)
-            {
-                if (char.IsLower(c)) hasLowercase = true;
-                else if (char.IsUpper(c)) hasUppercase = true;
-                else if (char.IsDigit(c)) hasDigit = true;
-                else if (char.IsSymbol(c)) hasSymbol = true;
-                else return false;
-            }
-            return hasLowercase && hasUppercase && hasDigit && hasSymbol;
-        }
     }
 }

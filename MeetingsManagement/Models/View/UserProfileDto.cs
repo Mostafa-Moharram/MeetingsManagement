@@ -2,6 +2,13 @@
 
 namespace MeetingsManagementWeb.Models.View
 {
+    public class UserNicknameDto
+    {
+        [Required]
+        public string? Nickname { get; set; }
+        [Required]
+        public string? Password { get; set; }
+    }
     public class UserPasswordDto
     {
         [Required, DataType(DataType.Password)]
@@ -11,23 +18,11 @@ namespace MeetingsManagementWeb.Models.View
         [Required, Compare("NewPassword")]
         public string? NewPasswordConfirmation { get; set; }
     }
-    public class PhoneNumberDto
+    public class UserPhoneNumberDto
     {
         [Required, DataType(DataType.Password)]
         public string? Password {  get; set; }
         [Required]
         public string? PhoneNumber { get; set; }
-    }
-    public class UserProfileDto
-    {
-        public UserProfileDto(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentNullException(nameof(name));
-            Name = name;
-        }
-        public string Name { get; init; }
-        public UserPasswordDto UserPasswordDto { get; } = new UserPasswordDto();
-        public PhoneNumberDto PhoneNumberDto { get; } = new PhoneNumberDto();
     }
 }

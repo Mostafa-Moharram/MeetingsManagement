@@ -10,49 +10,69 @@
     <div class="settings">
         <div class="sidebar">
             <ul>
-                <li class="selected">Password</li>
+                <li class="selected">Nickname</li>
                 <li>Phone Number</li>
+                <li>Password</li>
             </ul>
         </div>
         <div class="setting">
             <form>
                 <div class="form-control">
                     <label>
-                        <div>Current Password</div>
-                        <input type="password" name="CurrentPassword" id="CurrentPassword" />
+                        <div>Nickname</div>
+                        <input type="text" name="nickname" />
                         <span class="form-input-validation"></span>
                     </label>
                 </div>
                 <div class="form-control">
                     <label>
+                        <div>Password</div>
+                        <input type="password" name="password" />
+                        <span class="form-input-validation"></span>
+                    </label>
+                </div>
+                <input type="submit" value="Update nickname" class="form-submit" />
+            </form>
+            <form hidden>
+                <div class="form-control">
+                    <label>
+                        <div>Phone Number</div>
+                        <input type="tel" name="phoneNumber" />
+                        <span class="form-input-validation"></span>
+                    </label>
+                </div>
+                <div class="form-control">
+                    <label>
+                        <div>Password</div>
+                        <input type="password" name="password" />
+                        <span class="form-input-validation"></span>
+                    </label>
+                </div>
+                <input type="submit" value="Update Phone Number" class="form-submit" />
+            </form>
+            <form hidden>
+                <div class="form-control">
+                    <label>
                         <div>New Password</div>
-                        <input type="password" name="NewPassword" id="NewPassword" />
+                        <input type="password" name="newPassword" />
                         <span class="form-input-validation"></span>
                     </label>
                 </div>
                 <div class="form-control">
                     <label>
                         <div>Confirm New Password</div>
-                        <input type="password" name="NewPasswordConfirmation" id="NewPasswordConfirmation" />
+                        <input type="password" name="newPasswordConfirmation" />
+                        <span class="form-input-validation"></span>
+                    </label>
+                </div>
+                <div class="form-control">
+                    <label>
+                        <div>Current Password</div>
+                        <input type="password" name="currentPassword" />
                         <span class="form-input-validation"></span>
                     </label>
                 </div>
                 <input type="submit" value="Update Password" class="form-submit">
-            </form>
-            <form hidden>
-                <div class="form-control">
-                    <label>
-                        <div>Password</div>
-                        <input type="password" name="currentPassword">
-                    </label>
-                </div>
-                <div class="form-control">
-                    <label>
-                        <div>Phone Number</div>
-                        <input type="tel" name="phoneNumber">
-                    </label>
-                </div>
-                <input type="submit" value="Update Phone Number" class="form-submit">
             </form>
         </div>
     </div>
@@ -64,5 +84,5 @@
 }
 
 @section Scripts {
-    <script src="~/js/profile.js?2023-10-30 15:03"></script>
+    <script src="~/js/profile.js?2023-11-07 14:24"></script>
 }

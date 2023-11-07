@@ -1,79 +1,124 @@
-const settingNavigationItems =
+﻿const settingNavigationItems =
     document.querySelectorAll(".content .container .holder .settings .sidebar ul li");
 const settingForms =
     document.querySelectorAll(".content .container .holder .settings .setting form");
+const nicknameElement = document.querySelector(".content h2");
 
-let currentSelectedIndex = 0;
-
-const updateSelected = (index) => {
-    settingNavigationItems[currentSelectedIndex].classList.remove("selected");
-    settingForms[currentSelectedIndex].setAttribute("hidden", "");
-    currentSelectedIndex = index;
-    settingNavigationItems[currentSelectedIndex].classList.add("selected");
-    settingForms[currentSelectedIndex].removeAttribute("hidden");
+const validatePassword = (password) => {
+    if (password.trim() === "")
+        return { validation: false, message: "The password can't be empty or contains spaces." };
+    const lengthCheck = password.length >= 6;
+    const lowercaseCheck = /[a-z]/.test(password);
+    const uppercaseCheck = /[A-Z]/.test(password);
+    const digitCheck = /\d/.test(password);
+    const validation = lengthCheck && lowercaseCheck && uppercaseCheck && digitCheck;
+    if (validation) return { validation };
+    return { validation, message: "The password isn't strong enough." };
 };
 
-settingNavigationItems.forEach((navItem, index) => {
-    navItem.onclick = () => updateSelected(index);
-});
-
-const isValidPassword = (password) => {
-    var lengthCheck = password.length >= 8;
-    var lowercaseCheck = /[a-z]/.test(password);
-    var uppercaseCheck = /[A-Z]/.test(password);
-    var digitCheck = /\d/.test(password);
-    return lengthCheck && lowercaseCheck && uppercaseCheck && digitCheck;
+const validateNickname = (nickname) => {
+    if (nickname.trim() === "")
+        return { validation: false, message: "The nickname field can't be empty." };
+    return { validation: true };
 };
 
-const validatePasswordFormData = (formData) => {
-    valid = true;
-    document.getElementById("CurrentPassword").nextElementSibling.textContent = "";
-    if (!isValidPassword(formData.get("CurrentPassword"))) {
-        valid = false;
-        document.getElementById("CurrentPassword").nextElementSibling.textContent = "Password is not strong enough.";
-    }
-    document.getElementById("NewPassword").nextElementSibling.textContent = "";
-    if (!isValidPassword(formData.get("NewPassword"))) {
-        valid = false;
-        document.getElementById("NewPassword").nextElementSibling.textContent = "Password is not strong enough.";
-    }
-    document.getElementById("NewPasswordConfirmation").nextElementSibling.textContent = "";
-    if (formData.get("NewPassword") != formData.get("NewPasswordConfirmation")) {
-        valid = false;
-        document.getElementById("NewPasswordConfirmation").nextElementSibling.textContent = "`Confirm Password` field doesn't match `New Password`.";
-    }
-    return valid;
+const validatePhoneNumber = (phoneNumber) => {
+    if (phoneNumber.trim() === "")
+        return { validation: false, message: "The phone number field can't be empty." };
+    return { validation: true };
 };
 
-settingForms[0].addEventListener("submit", function (e) {
-    e.preventDefault();
-    if (!this.reportValidity())
-        return false;
-    const data = new FormData(this);
-    if (!validatePasswordFormData(data))
+const validateNewPassword = (password, form) => {
+    if (password.trim() === "")
+        return { validation: false, message: "The new password can't be empty." };
+    if (password === form[2].value)
+        return { validation: false, message: "The new password can't equal the current password." };
+    return validatePassword(password);
+};
+
+const validateNewPasswordConfirmation = (password, form) => {
+    if (password.trim() === "")
+        return { validation: false, message: "The new password confirmation can't be empty." };
+    if (password === form[0].value)
+        return { validation: true };
+    return { validation: false, message: "The new password and its confirmation doesn't match." };
+};
+
+const validateConfirmationPassword = (password) => {
+    const result = validatePassword(password);
+    if (result.validation)
+        return result;
+    return { validation: false, message: "The password is incorrect." };
+};
+
+const links = ["Account/Update/Nickname", "Account/Update/PhoneNumber", "Account/Update/Password"];
+
+const validators = [
+    [validateNickname, validateConfirmationPassword],
+    [validatePhoneNumber, validateConfirmationPassword],
+    [validateNewPassword, validateNewPasswordConfirmation, validateConfirmationPassword]
+];
+
+const onSuccess = [
+    [(response) => nicknameElement.textContent = `Hello, ${response.nickname}`],
+    [],
+    []
+];
+
+const onFailure = [
+    [],
+    [],
+    []
+];
+
+const submitForm = (form, index) => {
+    let validation = true;
+    validators[index].forEach((validator, i) => {
+        form[i].nextElementSibling.textContent = "";
+        const result = validator(form[i].value, form);
+        if (!result.validation) {
+            validation = false;
+            form[i].nextElementSibling.textContent = result.message;
+        }
+    });
+    if (!validation)
         return;
-    fetch("/Account/ChangePassword", {
-        method: "post",
-        headers: {
-            'Content-Type': "application/json"
-        },
-        body: JSON.stringify({
-            CurrentPassword: data.get("CurrentPassword"),
-            NewPassword: data.get("NewPassword"),
-            NewPasswordConfirmation: data.get("NewPasswordConfirmation")
-        })
+    const data = {};
+    for (const [key, value] of new FormData(form))
+        data[key] = value;
+    fetch(links[index], {
+        method: "put",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
     })
-        .then(response => response.json())
-        .then(response => {
-            if (response.status == "Success")
-            console.log(response);
-        })
+        .then(async response => {
+            const responseBody = await response.json();
+            if (response.ok) {
+                form.reset();
+                onSuccess[index].forEach((callback) => callback(responseBody));
+            } else {
+                onFailure[index].forEach((callback) => callback(responseBody));
+            }
+        });
+}
+
+settingForms.forEach((form, index) => {
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitForm(form, index);
+    });
 });
 
-settingForms[1].addEventListener("submit", function (e) {
-    e.preventDefault();
-    if (!this.reportValidity())
-        return;
-    const data = new FormData(this);
-    
-});
+let activeFormIndex = 0;
+
+const updateActiveForm = (index) => {
+    for (let i = 0; settingForms[activeFormIndex][i].type !== "submit"; ++i)
+        settingForms[activeFormIndex][i].nextElementSibling.textContent = "";
+    settingNavigationItems[activeFormIndex].classList.remove("selected");
+    settingForms[activeFormIndex].setAttribute("hidden", "");
+    activeFormIndex = index;
+    settingForms[activeFormIndex].removeAttribute("hidden");
+    settingNavigationItems[activeFormIndex].classList.add("selected");
+};
+
+settingNavigationItems.forEach((element, index) => element.addEventListener("click", () => updateActiveForm(index)));

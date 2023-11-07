@@ -1,5 +1,4 @@
 ﻿using MeetingsManagementWeb.Models;
-using MeetingsManagementWeb.Models.View;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
