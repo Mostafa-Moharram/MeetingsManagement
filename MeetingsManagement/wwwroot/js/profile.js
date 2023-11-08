@@ -1,4 +1,6 @@
-﻿const settingNavigationItems =
+﻿import { toastMessage } from "./toast.js?2023-11-08 23:19";
+
+const settingNavigationItems =
     document.querySelectorAll(".content .container .holder .settings .sidebar ul li");
 const settingForms =
     document.querySelectorAll(".content .container .holder .settings .setting form");
@@ -60,15 +62,18 @@ const validators = [
 ];
 
 const onSuccess = [
-    [(response) => nicknameElement.textContent = `Hello, ${response.nickname}`],
-    [],
-    []
+    [(response) => {
+        nicknameElement.textContent = `Hello, ${response.nickname}`;
+        toastMessage("The nickname is updated successfully.");
+    }],
+    [() => toastMessage("The phone number is updated successfully.")],
+    [() => toastMessage("The password is updated successfully.")]
 ];
 
 const onFailure = [
-    [],
-    [],
-    []
+    [(response) => toastMessage(response.status + '\n' + response.message)],
+    [(response) => toastMessage(response.status + '\n' + response.message)],
+    [(response) => toastMessage(response.status + '\n' + response.message)]
 ];
 
 const submitForm = (form, index) => {

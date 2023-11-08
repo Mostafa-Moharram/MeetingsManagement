@@ -1,0 +1,45 @@
+*{
+    box-sizing: border-box;
+}
+
+body {
+    background-color: grey;
+}
+
+#toaster {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(255 0 0 / 50%);
+}
+
+#toaster > .toaster-box {
+    width: 250px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#toaster > .toaster-box > .toaster-content {
+    margin: 0;
+}
+
+#toaster button {
+    display: block;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    margin: 10px auto 0;
+    cursor: pointer;
+    user-select: none;
+    font-weight: bold;
+    line-height: 1;
+    background-color: red;
+}
