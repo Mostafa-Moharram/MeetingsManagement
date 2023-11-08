@@ -18,8 +18,20 @@ namespace MeetingsManagementWeb.Controllers
         [Authorize]
         public IActionResult Schedule()
         {
-            var meeting = new Meeting { UserId = _userManager.GetUserId(HttpContext.User)! };
-            return View(meeting);
+            return View();
+        }
+        [Authorize]
+        public IActionResult Reschedule(int id)
+        {
+            string? userId = _userManager.GetUserId(HttpContext.User);
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+            var meeting = _dbContext.Meetings.Find(id);
+            if (meeting is null)
+                return NotFound();
+            if (meeting.UserId != userId)
+                return Unauthorized();
+            return View("Schedule", meeting);
         }
         [Authorize, HttpPost]
         public IActionResult Schedule(Meeting meeting)
@@ -36,7 +48,10 @@ namespace MeetingsManagementWeb.Controllers
                 ModelState.AddModelError("EndTime", "The end time cannot be earlier than the start time.");
                 return View();
             }
-            _dbContext.Add(meeting);
+            if (meeting.Id > 0)
+                _dbContext.Update(meeting);
+            else
+                _dbContext.Add(meeting);
             _dbContext.SaveChanges();
             return RedirectToRoute("MeetingReminders", new { meeting.Id });
         }
@@ -50,10 +65,10 @@ namespace MeetingsManagementWeb.Controllers
         {
             var meeting = _dbContext.Meetings.FirstOrDefault(m => m.Id == id);
             if (meeting is null)
-                return Ok(new { status = "Failed", message = $"The meeting with Id = {id} doesn't exist." });
+                return NotFound();
             _dbContext.Meetings.Remove(meeting);
             _dbContext.SaveChanges();
-            return Ok(new { status = "Succeeded" });
+            return NoContent();
         }
     }
 }

@@ -20,7 +20,7 @@
             }
             <div class="edit-options">
                 <a asp-route="MeetingReminders" asp-route-id="@meeting.Id">Reminders</a>
-                <a href="#">Edit</a>
+                <a asp-controller="Meetings" asp-action="Reschedule" asp-route-id="@meeting.Id">Edit</a>
             </div>
         </div>
     }

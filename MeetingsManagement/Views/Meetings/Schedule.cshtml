@@ -1,11 +1,19 @@
 ﻿@model Meeting
 
 @{
-    ViewData["Title"] = "Schedule Meeting";
-    ViewData["ContentTitle"] = "Schedule Meeting";
+    if (Model is null)
+    {
+        ViewData["Title"] = "Schedule Meeting";
+        ViewData["ContentTitle"] = "Schedule Meeting";
+    } else
+    {
+        ViewData["Title"] = "Reschedule Meeting";
+        ViewData["ContentTitle"] = "Reschedule Meeting";
+    }
 }
 
 <form class="schedule-meeting-form" asp-controller="Meetings" asp-action="Schedule" method="post">
+    <input asp-for="Id" hidden />
     <div class="form-control">
         <label>
             <div>Title</div>
@@ -34,7 +42,13 @@
             <span asp-validation-for="EndTime" class="form-input-validation"></span>
         </label>
     </div>
-    <input type="submit" value="Schedule" class="form-submit" />
+    @if(Model is null)
+    {
+        <input type="submit" value="Schedule" class="form-submit" />
+    } else
+    {
+        <input type="submit" value="Reschedule" class="form-submit" />
+    }
 </form>
 
 @section Styles {

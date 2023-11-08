@@ -15,8 +15,8 @@
     <div class="content-heading">
         <div class="meeting">
             <h3 class="meeting-title">@Model.MeetingTitle</h3>
-            <div class="datetime">From <span>@Model.StartTime.Date.ToString("yyyy-MM-dd hh:mm tt")</span></div>
-            <div class="datetime">To <span>@Model.EndTime.Date.ToString("yyyy-MM-dd hh:mm tt")</span></div>
+            <div class="datetime">From <span>@Model.StartTime.ToString("yyyy-MM-dd hh:mm tt")</span></div>
+            <div class="datetime">To <span>@Model.EndTime.ToString("yyyy-MM-dd hh:mm tt")</span></div>
             <div class="description">@Model.MeetingDescription</div>
         </div>
         <form class="new-reminder-form">
