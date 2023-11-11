@@ -11,8 +11,8 @@
             <input asp-for="@meeting.Id" hidden />
             <h4>@meeting.Title</h4>
             <div class="timestamp">
-                <span>From <span class="from">@meeting.StartTime!.Value.ToString("yyyy-MM-dd hh:mm tt")</span></span>
-                <span>To <span class="to">@meeting.EndTime!.Value.ToString("yyyy-MM-dd hh:mm tt")</span></span>
+                <span>From <span class="from">@meeting.StartTime.ToString("yyyy-MM-dd hh:mm tt")</span></span>
+                <span>To <span class="to">@meeting.EndTime.ToString("yyyy-MM-dd hh:mm tt")</span></span>
             </div>
             @if (!string.IsNullOrEmpty(meeting.Description))
             {

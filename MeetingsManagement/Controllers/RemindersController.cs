@@ -27,8 +27,8 @@ namespace MeetingsManagementWeb.Controllers
                 MeetingId = meeting.Id,
                 MeetingTitle = meeting.Title,
                 MeetingDescription = meeting.Description,
-                StartTime = meeting.StartTime!.Value,
-                EndTime = meeting.EndTime!.Value,
+                StartTime = meeting.StartTime,
+                EndTime = meeting.EndTime,
                 Reminders = _dbContext.Reminders
                     .Where(reminder => reminder.MeetingId == id)
                     .OrderBy(reminder => reminder.DateTime)

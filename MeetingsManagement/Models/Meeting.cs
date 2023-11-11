@@ -12,9 +12,9 @@ namespace MeetingsManagementWeb.Models
         public string? Title { get; set; }
         public string? Description { get; set; }
         [Required]
-        public DateTime? StartTime { get; set; }
+        public DateTime StartTime { get; set; }
         [Required]
-        public DateTime? EndTime { get; set; }
+        public DateTime EndTime { get; set; }
         public string? UserId { get; set; }
         [ForeignKey("ApplicationUser"), NotMapped]
         public ApplicationUser? User { get; set; }
