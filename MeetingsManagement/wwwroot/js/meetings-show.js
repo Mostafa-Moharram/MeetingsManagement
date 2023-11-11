@@ -14,16 +14,13 @@ const sendDeleteMeeting = (index, onSuccess, onFailure) => {
             "Content-Type": "application/json"
         },
         body: index
-    }).then(response => response.json()).then(response => {
-        if (response.status === "Succeeded") {
-            if (onSuccess !== undefined && onSuccess !== null)
+    }).then(response => {
+        if (response.ok) {
+            if (onSuccess)
                 onSuccess();
-            return;
-        }
-        if (response.status === "Failed") {
-            if (onFailure !== undefined && onFailure !== null)
+        } else {
+            if (onFailure)
                 onFailure();
-            return;
         }
     });
 };
