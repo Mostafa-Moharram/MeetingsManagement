@@ -13,7 +13,10 @@
 }
 
 <form class="schedule-meeting-form" asp-controller="Meetings" asp-action="Schedule" method="post">
-    <input asp-for="Id" hidden />
+    @if (Model is not null)
+    {
+        <input asp-for="Id" hidden />
+    }
     <div class="form-control">
         <label>
             <div>Title</div>
