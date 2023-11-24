@@ -58,7 +58,8 @@ namespace MeetingsManagementWeb.Controllers
         [Authorize]
         public IActionResult Show()
         {
-            return View(_dbContext.Meetings.OrderBy(meeting => meeting.StartTime).ToList());
+            var userId = _userManager.GetUserId(HttpContext.User)!;
+            return View(_dbContext.Meetings.Where(m => m.UserId == userId).OrderBy(meeting => meeting.StartTime).ToList());
         }
         [Authorize, HttpDelete]
         public IActionResult Delete([FromBody] int id)

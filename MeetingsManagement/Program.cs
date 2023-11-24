@@ -1,5 +1,7 @@
 using MeetingsManagementWeb.Data;
 using MeetingsManagementWeb.Models;
+using MeetingsManagementWeb.Services;
+using MeetingsManagementWeb.Services.TimedEvents;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +14,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<EmailSender>();
+
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
     options => options.SignIn.RequireConfirmedAccount = true
     ).AddEntityFrameworkStores<ApplicationDbContext>();
@@ -22,6 +26,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = "/Account/LogOut";
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
+
+builder.Services.AddHostedService<RemindersExecutor>();
 
 var app = builder.Build();
 
