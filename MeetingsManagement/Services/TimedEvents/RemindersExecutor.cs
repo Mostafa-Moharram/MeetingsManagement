@@ -49,6 +49,7 @@ namespace MeetingsManagementWeb.Services.TimedEvents
             using var scope = _serviceProvider.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var emailSender = scope.ServiceProvider.GetRequiredService<EmailSender>();
+            var smsSender = scope.ServiceProvider.GetRequiredService<SmsSender>();
             using var transaction = await dbContext.Database.BeginTransactionAsync();
             var dueDateTime = DateTime.Now;
             var meetings = GetMeetingsOrderedById(dueDateTime, dbContext);
@@ -62,7 +63,7 @@ namespace MeetingsManagementWeb.Services.TimedEvents
                     ++j;
                 if (reminder.MeetingId < meetings[j].Meeting.Id)
                     throw new InvalidDataException();
-                reminderTasks.Add(ExecuteReminder(reminder, reminderTypes[reminder.TypeId], meetings[j], emailSender));
+                reminderTasks.Add(ExecuteReminder(reminder, reminderTypes[reminder.TypeId], meetings[j], emailSender, smsSender));
             }
             await Task.WhenAll(reminderTasks);
             dbContext.RemoveRange(reminders);
@@ -70,7 +71,7 @@ namespace MeetingsManagementWeb.Services.TimedEvents
             transaction.Commit();
         }
 
-        public static Task ExecuteReminder(Reminder reminder, string reminderType, MeetingUserDto meetingUserDto, EmailSender emailSender)
+        public static Task ExecuteReminder(Reminder reminder, string reminderType, MeetingUserDto meetingUserDto, EmailSender emailSender, SmsSender smsSender)
         {
             string messageBody = $"Hello {meetingUserDto.UserNickname},\n\n" +
                 $"This a gentle reminder set to be at {reminder.DateTime: yyyy-MM-dd hh:mm tt}" +
@@ -78,7 +79,18 @@ namespace MeetingsManagementWeb.Services.TimedEvents
                 $"having description `{meetingUserDto.Meeting.Description}` " +
                 $"scheduled from `{meetingUserDto.Meeting.StartTime: yyyy-MM-dd hh:mm tt}` " +
                 $"to `{meetingUserDto.Meeting.EndTime: yyyy-MM-dd hh:mm tt}`.";
-            emailSender.Send(messageBody, meetingUserDto.UserEmail);
+            switch (reminderType)
+            {
+                case "Email":
+                    emailSender.Send(messageBody, meetingUserDto.UserEmail);
+                    break;
+                case "SMS":
+                    smsSender.Send(meetingUserDto.UserPhoneNumber, messageBody);
+                    break;
+                default:
+                    // Handle the error
+                    break;
+            }
             return Task.CompletedTask;
         }
 

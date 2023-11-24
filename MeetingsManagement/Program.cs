@@ -14,7 +14,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<EmailSender>();
+builder.Services.AddTransient<EmailSender>();
+builder.Services.AddTransient<SmsSender>();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
     options => options.SignIn.RequireConfirmedAccount = true

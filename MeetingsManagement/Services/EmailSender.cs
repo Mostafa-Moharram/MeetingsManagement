@@ -3,7 +3,7 @@ using System.Net;
 
 namespace MeetingsManagementWeb.Services
 {
-    public class EmailSender : ISenderService, IDisposable
+    public class EmailSender
     {
         private readonly string _senderEmail;
         private readonly string _senderPassword;
@@ -19,8 +19,6 @@ namespace MeetingsManagementWeb.Services
                 EnableSsl = true
             };
         }
-
-        public void Dispose() => _smtpClient.Dispose();
 
         public void Send(string message, string receiverEmail)
         {
